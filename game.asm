@@ -26,7 +26,7 @@
 # 3. shoot Enemies - (Character can shoot the Pink enemy, along with shoot lasers to pick up coins) - 2 marks
 # # Link to video demonstration for final
 #submission:
-# - (insert YouTube / MyMedia / other URL here). Make sure we can view it!
+# - YOUTUBE VIDEO FOR DEMO - https://www.youtube.com/watch?v=-uX7K-wv-Aw - YOUTUBE VIDEO FOR DEMO
 # # Are you OK with us sharing the video with people outside course
 #staff? # - yes, and please share this project github link as
 #well!
@@ -442,7 +442,17 @@ resetScreen:
     
 displayLoseScreen:
     jal resetScreen
+    jal drawSlash
+    jal drawTwoTotal
     jal drawLoseScreen
+    la $t4, coinsCollected
+    lw $t7, 0($t4)
+    li $t3, 0 
+    beq $t7, $t3, drawZero
+    li $t3, 1
+    beq $t7, $t3, drawOne
+    li $t3, 2
+    beq $t7, $t3, drawTwoIncrement
     li $v0, 10
     syscall
     j main
@@ -949,7 +959,7 @@ continue:
     li $s1, 15            
 
 check_enemy_loop:
-    beqz $s1, skip_check  # Exit loop if all checked
+    beqz $s1, skip_check  
 
     lw $s2, 0($t9)        
     add $s3, $t0, $s2     
